@@ -36,7 +36,7 @@ def call(Map config) {
         stages {
             stage('Copy Playbook to Edge Node') {
                 steps {
-                    sshagent([credId]) {
+                    script {
                         sh """
                             echo "scp -o StrictHostKeyChecking=no \
                                 ${playbookPath} \
@@ -47,7 +47,7 @@ def call(Map config) {
             }
             stage('Run Playbook on Edge Node') {
                 steps {
-                    sshagent([credId]) {
+                    script {
                         sh "echo \"ssh -o StrictHostKeyChecking=no ansible@${edgeNode} '${ansibleCmd}'\""  // ✅ Bug 3 fixed
                     }
                 }
